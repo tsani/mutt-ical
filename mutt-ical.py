@@ -29,7 +29,7 @@ OPTIONS:
 """ % sys.argv[0]
 
 def del_if_present(dic, key):
-    if dic.has_key(key):
+    if key in dic:
         del dic[key]
 
 def set_accept_state(attendees, state):
@@ -61,7 +61,7 @@ def get_answer(invitation):
     #for i in ["uid", "summary", "dtstart", "dtend", "organizer"]:
     # There's a problem serializing TZ info in Python, temp fix
     for i in ["uid", "summary", "organizer"]:
-        if invitation.vevent.contents.has_key(i):
+        if i in invitation.vevent.contents:
             ans.vevent.add( invitation.vevent.contents[i][0] )
 
     # new timestamp
@@ -79,7 +79,7 @@ def write_to_tempfile(ical):
 
 def get_mutt_command(ical, email_address, accept_decline, icsfile):
     accept_decline = accept_decline.capitalize()
-    if ical.vevent.contents.has_key('organizer'):
+    if 'organizer' in ical.vevent.contents:
         if hasattr(ical.vevent.organizer,'EMAIL_param'):
             sender = ical.vevent.organizer.EMAIL_param
         else:
@@ -120,18 +120,18 @@ def openics(invitation_file):
 
 def display(ical):
     summary = ical.vevent.contents['summary'][0].value.encode()
-    if ical.vevent.contents.has_key('organizer'):
+    if 'organizer' in ical.vevent.contents:
         if hasattr(ical.vevent.organizer,'EMAIL_param'):
             sender = ical.vevent.organizer.EMAIL_param
         else:
             sender = ical.vevent.organizer.value.split(':')[1] #workaround for MS
     else:
         sender = "NO SENDER"
-    if ical.vevent.contents.has_key('description'):
+    if 'description' in ical.vevent.contents:
         description = ical.vevent.contents['description'][0].value
     else:
         description = "NO DESCRIPTION"
-    if ical.vevent.contents.has_key('attendee'):
+    if 'attendee' in ical.vevent.contents:
         attendees = ical.vevent.contents['attendee']
     else:
         attendees = ""
@@ -176,7 +176,7 @@ if __name__=="__main__":
 
     ans = get_answer(invitation)
 
-    if invitation.vevent.contents.has_key('attendee'):
+    if 'attendee' in invitation.vevent.contents:
         attendees = invitation.vevent.contents['attendee']
     else:
         attendees = ""
