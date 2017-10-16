@@ -59,7 +59,7 @@ def get_answer(invitation):
 
     # just copy from invitation
     #for i in ["uid", "summary", "dtstart", "dtend", "organizer"]:
-	# There's a problem serializing TZ info in Python, temp fix
+    # There's a problem serializing TZ info in Python, temp fix
     for i in ["uid", "summary", "organizer"]:
         if invitation.vevent.contents.has_key(i):
             ans.vevent.add( invitation.vevent.contents[i][0] )
@@ -116,7 +116,7 @@ def openics(invitation_file):
                 invitation = vobject.readOne(f, ignoreUnreadable=True)
         except AttributeError:
             invitation = vobject.readOne(f, ignoreUnreadable=True)
-	return invitation
+    return invitation
 
 def display(ical):
     summary = ical.vevent.contents['summary'][0].value.encode()
@@ -142,9 +142,9 @@ def display(ical):
         if hasattr(attendee,'EMAIL_param'):
             sys.stdout.write(attendee.CN_param + " <" + attendee.EMAIL_param + ">, ")
         else:
-            try: 
+            try:
                 sys.stdout.write(attendee.CN_param + " <" + attendee.value.split(':')[1] + ">, ") #workaround for MS
-            except: 
+            except:
                 sys.stdout.write(attendee.value.split(':')[1] + " <" + attendee.value.split(':')[1] + ">, ") #workaround for 'mailto:' in email
     sys.stdout.write("\n\n")
     sys.stdout.write(description + "\n")
