@@ -6,8 +6,6 @@ This script is meant as a simple way to reply to ical invitations from mutt.
 See README for instructions and LICENSE for licensing information.
 """
 
-from __future__ import with_statement
-
 __author__="Martin Sander"
 __license__="MIT"
 
@@ -105,8 +103,9 @@ def execute(command, mailtext):
         result = process.poll()
         time.sleep(.1)
     if result != 0:
-        print "unable to send reply, subprocess exited with\
-                exit code %d\nPress return to continue" % result
+        print("unable to send reply; "
+            "subprocess exited with code", result)
+        print("Press return to continue")
         sys.stdin.readline()
 
 def openics(invitation_file):
